@@ -1,0 +1,23 @@
+{
+  "name": "dolar-blue-alert",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon dollarblue.js"
+  },
+  "author": "javier destefanis",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "http": "0.0.1-security",
+    "https": "^1.0.0",
+    "mongo": "^0.1.0",
+    "mongoose": "^5.10.4",
+    "nodemon": "^2.0.4",
+    "path": "^0.12.7",
+    "request": "^2.88.2",
+    "web-push": "^3.4.4"
+  }
+}
