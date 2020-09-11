@@ -1,0 +1,32 @@
+version: "3"
+services:
+  web:
+    container_name: dollarBlueWebServer
+    build: .
+    restart: always
+    user: "1000:1000"
+    ports:
+      - 8082:8082
+    volumes:
+      - ./:/home/node/app
+      - /home/node/app/node_modules
+    depends_on:
+      - mongo
+
+  mongo:
+    container_name: dollarBlueMongoDB
+    image: mongo:latest
+    restart: unless-stopped
+    volumes:
+      - mongodb_dollar_blue_container:/data/db
+      - ./db-init/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    environment:
+      - MONGO_INITDB_DATABASE=dollarBlue
+
+networks:
+  default:
+    external:
+      name: dollar-blue-production-network
+
+volumes:
+  mongodb_dollar_blue_container:

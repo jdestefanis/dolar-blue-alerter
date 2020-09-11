@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const ApiController = require('../controllers/apicontroller');
+const UserController = require('../controllers/usercontroller');
 const EmailService = require('../services/email.service');
+const AuthService = require('../services/auth.service');
 const { check, validationResult, buildCheckFunction } = require('express-validator');
 
 
 router.get('/getdollarblue', ApiController.getDollarBlue);
 // router.post('/subscribe', ApiController.saveUserData);
 
-router.get('', )
 router.post('/subscribe', [
     check('email').not().isEmpty().withMessage('El email no puede estar vacio'),
 ], async (req, res, next) => { 
@@ -34,5 +35,20 @@ router.post('/subscribe', [
         }
     };
 });
+
+router.post('/login', UserController.login)
+router.post('/request-password', UserController.requestPassword)
+router.put('/reset-password/:token', UserController.resetPassword)
+
+// *** JWT token needed ***
+// for ADMIN role
+router.post('/register', UserController.register)
+router.put('/switch-activated/:user_id', AuthService.authenticateJWT_forADMIN, UserController.swithActivated)
+router.get('/list', AuthService.authenticateJWT_forADMIN, UserController.list)
+// for any role
+router.post('/change-password', AuthService.authenticateJWT, UserController.changePassword)
+router.post('/edit-name', AuthService.authenticateJWT, UserController.editName)
+
+router.get('', )
 
 module.exports = router
