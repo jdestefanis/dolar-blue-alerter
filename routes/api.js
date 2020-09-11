@@ -17,14 +17,14 @@ router.post('/subscribe', [
         return res.status(422).jsonp(errors);
     } else {
         try {   
-            await ApiController.saveUserData(req.body);
+            await ApiController.saveUserData(req, res);
             //Aqui hacer el envio del email para la confirmacion su identidad (soy owner del email que use para subscribir)
             const email = await EmailService.sendEmail(req.body.email);
             if(email)
                 req.flash('success_msg', 'Hemos enviado un email para verificar su identidad. Clickee en el link para poder comenzar a utilizar el servicio');
             else
                 req.flash('fatal_msg', 'El email de confirmacion de cuenta no ha podido ser enviado.');
-            res.redirect('/users/login');
+            res.render('login');
 
             // return res.status(200).jsonp('success');
         }

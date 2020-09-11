@@ -28,14 +28,13 @@ async function getDollarBlue(req, res, next) {
     }
 };
 
-async function saveUserData(data) {
+async function saveUserData(req, res) {
     console.log('-----------------------------------------------------');
     console.log("Insert New User/Update User");
     console.log('-----------------------------------------------------');
-    console.log(data);
     try {
-        var user = await ApiService.updateUserData(data);
-        return res.status(200).json({ status: 200, data: user });
+        await ApiService.updateUserData(req.body);
+        return res.status(200).json({ status: 200 });
     } catch (e) {
         return res.status(400).json({ status: 400, message: e.message });
     }
