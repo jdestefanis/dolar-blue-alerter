@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const { DOLLARBLUE_MONGODB_HOST, DOLLARBLUE_MONGODB_DATABASE } = process.env;
 
 const MONGODB_URI = `mongodb://${
-  DOLLARBLUE_MONGODB_HOST ? DOLLARBLUE_MONGODB_HOST : "dollarBlueMongoDB:27017"
+  DOLLARBLUE_MONGODB_HOST ? DOLLARBLUE_MONGODB_HOST : "localhost"
 }/${DOLLARBLUE_MONGODB_DATABASE ? DOLLARBLUE_MONGODB_DATABASE : "dollarblue"}`;
 
 mongoose
