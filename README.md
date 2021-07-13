@@ -1,1 +1,1 @@
-# dolar-blue-alerter
+# dolar-blue-alerter-api

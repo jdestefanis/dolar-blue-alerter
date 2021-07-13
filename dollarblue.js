@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const http = require('http');
+const https = require('https');
 const fs = require('fs');
 const app = express();
 const exphbs = require('express-handlebars');
@@ -70,6 +71,29 @@ app.all('/*', function (req, res, next) {
 });
 
 app.use('/api', api);
+
+//// HTTPS Server ////
+const options = {
+  key: fs.readFileSync(config.certKey),
+  cert: fs.readFileSync(config.certCert),
+  ca: fs.readFileSync(config.certCa)
+};
+
+var httpsServer = https.createServer(options, app, function (req, res) {  //For local and prod this is ok! (With the certs above)
+console.log('request starting...https');
+res.writeHead(200, {'Content-Type': 'text/plain'});
+res.write('hello client!');
+res.end();
+});
+
+httpsServer.listen(config.nodeHttpsAppPort, function(req, res) {
+  console.log('---------------------------------------------')  
+  console.log('--------- Node HTTPS Server Started ---------')
+  console.log('---------------------------------------------')
+  console.log(httpsServer.address())
+  var port = httpsServer.address().port
+  console.log('Server is running at', config.nodeApiUrl + ':', port)
+});
 
 //// HTTP Server ////
 var httpServer = http.Server(app, function (req, res) {  //For local and prod this is ok! (With the certs above)

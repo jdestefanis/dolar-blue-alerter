@@ -15,7 +15,6 @@ module.exports = {
    editName,
    swithActivated  
 }
-
    
 async function register(req, res) {
    let body = req.body;
